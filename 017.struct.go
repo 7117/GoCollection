@@ -2,13 +2,13 @@ package main
 
 import "fmt"
 
-type Person struct{
+type Person struct {
 	name string
-	age int
+	age  int
 }
 
-func main(){
-	person := Person{"张三",12};
+func main() {
+	person := Person{"张三", 12}
 
-	fmt.Print(person);
+	fmt.Print(person)
 }
