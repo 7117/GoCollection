@@ -12,7 +12,7 @@ func test(ch chan int) {
 }
 
 func main() {
-	ch := make(chan int,0)
+	ch := make(chan int, 0)
 	go test(ch)
 	time.Sleep(3 * time.Second)
 	fmt.Print("main end")
