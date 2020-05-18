@@ -15,10 +15,10 @@ func main() {
 	db, _ := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/test1?charset=utf8")
 
 	stmt, _ := db.Prepare("update access set title=? where id=1")
-	res,_ := stmt.Exec("rrr")
+	res, _ := stmt.Exec("rrr")
 
-	row,_ := res.RowsAffected()
+	row, _ := res.RowsAffected()
 
-	fmt.Print(row);
+	fmt.Print(row)
 
 }

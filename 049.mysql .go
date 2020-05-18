@@ -16,11 +16,11 @@ func main() {
 
 	stmt, _ := db.Query("select id,title from access")
 
-	for stmt.Next(){
+	for stmt.Next() {
 		var id int
 		var title string
 
-		stmt.Scan(&id,&title)
-		fmt.Println(id,title)
+		stmt.Scan(&id, &title)
+		fmt.Println(id, title)
 	}
 }
