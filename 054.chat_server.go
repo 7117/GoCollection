@@ -3,9 +3,15 @@ package main
 import (
 	"fmt"
 	"net"
+	"strings"
 )
 
-func Deal(conn net.Conn) {
+var onlineConns map[string]net.Conn
+var messageQueue chan string
+var quitChan chan bool
+
+//收集消息
+func Product(conn net.Conn) {
 	defer conn.Close()
 
 	buff := make([]byte, 1024)
@@ -13,20 +19,28 @@ func Deal(conn net.Conn) {
 	for {
 		numOfBytes, _ := conn.Read(buff)
 		if numOfBytes != 0 {
-			remoteAddr := conn.RemoteAddr()
-			fmt.Print(remoteAddr)
-			fmt.Printf(" received mess：%s\n", string(buff[0:numOfBytes]))
+			message := string(buff[0:numOfBytes])
+			messageQueue <- message
 		}
 	}
 }
 
-func doProcess()
+func Consume() {
 
-func ConsumeMessage() {
+	quitChan = make(chan bool)
+
 	for {
 		select {
-		case mess := <-messageQueue:
-			doProcess(message)
+		case message := <-messageQueue:
+			contents := strings.Split(message, "#")
+			if len(contents) > 1 {
+				addr := contents[0]
+				mess := contents[1]
+
+				if conn, ok := onlineConns[addr]; ok {
+					conn.Write([]byte(mess))
+				}
+			}
 		case <-quitChan:
 			break
 		}
@@ -34,14 +48,25 @@ func ConsumeMessage() {
 }
 
 func main() {
+	onlineConns = make(map[string]net.Conn)
+	messageQueue = make(chan string, 1000)
 
 	listen, _ := net.Listen("tcp", "127.0.0.1:8080")
 	defer listen.Close()
 
-	go ConsumeMessage()
+	go Consume()
 
 	for {
 		conn, _ := listen.Accept()
-		go Deal(conn)
+
+		link := fmt.Sprintf("%s", conn.RemoteAddr())
+		
+		onlineConns[link] = conn
+
+		for i, _ := range onlineConns {
+			fmt.Println(i)
+		}
+
+		go Product(conn)
 	}
 }

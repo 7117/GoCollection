@@ -31,13 +31,15 @@ func main() {
 	conn, _ := net.Dial("tcp", "127.0.0.1:8080")
 	defer conn.Close()
 
+	//一直发送
 	go send(conn)
 
-	buff := make([]byte, 1024)
+	//一直接受
+	buf := make([]byte, 1024)
 	for {
-		conn.Read(buff)
+		numOfBytes, _ := conn.Read(buf)
+
 		fmt.Println("receive server message content:" + string(buf[0:numOfBytes]))
 	}
 
-	fmt.Print("end")
 }
