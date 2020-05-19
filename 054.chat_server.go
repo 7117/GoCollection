@@ -20,10 +20,25 @@ func Deal(conn net.Conn) {
 	}
 }
 
+func doProcess()
+
+func ConsumeMessage() {
+	for {
+		select {
+		case mess := <-messageQueue:
+			doProcess(message)
+		case <-quitChan:
+			break
+		}
+	}
+}
+
 func main() {
 
 	listen, _ := net.Listen("tcp", "127.0.0.1:8080")
 	defer listen.Close()
+
+	go ConsumeMessage()
 
 	for {
 		conn, _ := listen.Accept()

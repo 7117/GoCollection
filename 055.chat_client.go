@@ -36,7 +36,7 @@ func main() {
 	buff := make([]byte, 1024)
 	for {
 		conn.Read(buff)
-		fmt.Print(string(buff))
+		fmt.Println("receive server message content:" + string(buf[0:numOfBytes]))
 	}
 
 	fmt.Print("end")
