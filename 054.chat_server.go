@@ -12,7 +12,12 @@ var quitChan chan bool
 
 //收集消息
 func Product(conn net.Conn) {
-	defer conn.Close()
+	//切片剔除关闭的
+	defer func(conn net.Conn) {
+		link := fmt.Sprintf("%s", conn.RemoteAddr())
+		delete(onlineConns,link)
+		conn.Close()
+	}(conn)
 
 	buff := make([]byte, 1024)
 
@@ -35,7 +40,7 @@ func Consume() {
 			contents := strings.Split(message, "#")
 			if len(contents) > 1 {
 				addr := contents[0]
-				mess := contents[1]
+				mess := strings.Join(contents[1:]," ")
 
 				if conn, ok := onlineConns[addr]; ok {
 					conn.Write([]byte(mess))
@@ -62,9 +67,7 @@ func main() {
 		conn, _ := listen.Accept()
 
 		link := fmt.Sprintf("%s", conn.RemoteAddr())
-
 		onlineConns[link] = conn
-
 		for i, _ := range onlineConns {
 			fmt.Println(i)
 		}
