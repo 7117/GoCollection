@@ -54,13 +54,15 @@ func main() {
 	listen, _ := net.Listen("tcp", "127.0.0.1:8080")
 	defer listen.Close()
 
+	// 一直发送
 	go Consume()
 
+	// 一直接受
 	for {
 		conn, _ := listen.Accept()
 
 		link := fmt.Sprintf("%s", conn.RemoteAddr())
-		
+
 		onlineConns[link] = conn
 
 		for i, _ := range onlineConns {

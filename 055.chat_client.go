@@ -27,6 +27,15 @@ func send(conn net.Conn) {
 	}
 }
 
+func receive(conn net.Conn) {
+	buf := make([]byte, 1024)
+	for {
+		numOfBytes, _ := conn.Read(buf)
+
+		fmt.Println("receive server message content:" + string(buf[0:numOfBytes]))
+	}
+}
+
 func main() {
 	conn, _ := net.Dial("tcp", "127.0.0.1:8080")
 	defer conn.Close()
@@ -35,11 +44,6 @@ func main() {
 	go send(conn)
 
 	//一直接受
-	buf := make([]byte, 1024)
-	for {
-		numOfBytes, _ := conn.Read(buf)
-
-		fmt.Println("receive server message content:" + string(buf[0:numOfBytes]))
-	}
+	receive(conn)
 
 }
