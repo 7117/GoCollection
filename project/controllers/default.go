@@ -42,9 +42,10 @@ func (c *MainController) Tocookie() {
 }
 
 func (c *MainController) Tosession() {
-	c.SetSession("name","sunxiao")
+	c.SetSession("name","fffff")
 
 	var count interface{}
 	count = c.GetSession("name")
-	fmt.Println(count)
+	c.Ctx.WriteString(fmt.Sprintf("%v", count))
+
 }
