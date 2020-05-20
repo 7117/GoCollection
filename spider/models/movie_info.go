@@ -39,6 +39,18 @@ func AddMovieInfo(movieInfo *MovieInfo) (id int64, err error) {
 	return id, err
 }
 
+func GetMovieUrls(movieHtml string)[]string{
+	reg := regexp.MustCompile(`<a.*?href="(https://movie.douban.com/.*?)"`)
+	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
+	var movieSets []string
+	for _,v := range result{
+		movieSets = append(movieSets, v[1])
+	}
+
+	return movieSets
+}
+
 func GetMovieDirector(movieHtml string) string {
 	if movieHtml == "" {
 		return ""
