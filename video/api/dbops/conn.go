@@ -15,7 +15,7 @@ var (
 
 
 func init() {
-	dbConn,err := sql.Open("mysql","root:root@tcp(127.0.0.1:3306)/video")
+	dbConn,err = sql.Open("mysql","root:root@tcp(127.0.0.1:3306)/video")
 
 	if err != nil {
 		panic(err.Error())

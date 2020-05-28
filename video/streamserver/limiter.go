@@ -29,6 +29,6 @@ func (cl *ConnLimiter) GetConn() bool {
 }
 
 func (cl *ConnLimiter) ReleaseConn() {
-	c := <- cl.bucket
+	c := <-cl.bucket
 	fmt.Print(c)
 }
