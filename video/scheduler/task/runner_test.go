@@ -30,6 +30,6 @@ func TestRunner(t *testing.T) {
 
 	runner := NewRunner(30, false, d, e)
 	go runner.StartAll()
-	time.Sleep(2 * time.Second)
+	time.Sleep(1 * time.Second)
 
 }
