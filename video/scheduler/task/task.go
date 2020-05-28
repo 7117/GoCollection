@@ -4,7 +4,6 @@ import (
 	"errors"
 	"goPractice/video/scheduler/dbops"
 	"log"
-	"sync"
 )
 
 func VideoClearDispatcher(dc dataChan) error {
