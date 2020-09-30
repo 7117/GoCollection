@@ -2,12 +2,13 @@ package main
 
 import "fmt"
 
-func main() {
-
-	c := addNum(1, 4);
-	fmt.Println(c)
+func addNum(a *int) (int) {
+	*a = *a + 1;
+	return *a;
 }
 
-func addNum(a, b int) (int) {
-	return a + b;
+func main() {
+	a := 1;
+	c := addNum(&a);
+	fmt.Println(c)
 }
