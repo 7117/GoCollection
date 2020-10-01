@@ -21,4 +21,9 @@ func main() {
 	obj.setxy(1.1, 2.2);
 	a, b := obj.getxy();
 	fmt.Println(a, b)
+
+	//直接使用类的实例化不行  要先实例化才可以！
+	//point.setxy(1.11,2.22);
+	//a,b := point.getxy();
+	//fmt.Println(a,b);
 }
