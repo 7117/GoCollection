@@ -7,8 +7,15 @@ type Person struct {
 	age int
 }
 
-func main() {
-	person := Person{"zs",20}
+type Human struct {
+	Person
+	specially string
+}
 
-	fmt.Println(person)
+func main() {
+	human := Human{Person{"zs",11},"qqq"}
+
+	fmt.Println(human)
+	fmt.Println(human.Person)
+	fmt.Println(human.Person.name)
 }
