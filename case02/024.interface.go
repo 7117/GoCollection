@@ -7,6 +7,9 @@ type Animal interface {
 	Run() bool
 }
 
+type Animale2 interface {
+	Fly() bool
+}
 type Bird struct {
 }
 
@@ -21,8 +24,23 @@ func (Bird Bird) Run() bool {
 }
 
 func main() {
+	//bird := new(Bird)
+	//
+	//bird.Fly();
+	//bird.Run();
+
+
+	var animal Animal
+	var animal2 Animale2
 	bird := new(Bird)
 
-	bird.Fly();
-	bird.Run();
+	animal = bird
+	animal2 = bird
+
+	animal.Fly();
+	animal.Run();
+
+	animal2.Fly();
+
+
 }
