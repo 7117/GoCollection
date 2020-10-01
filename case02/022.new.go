@@ -12,7 +12,7 @@ func (point *Point) setxy(px, py float32) {
 	point.py = py;
 }
 
-func (point Point) getxy() (px, py float32) {
+func (point *Point) getxy() (px, py float32) {
 	return point.px, point.py;
 }
 
