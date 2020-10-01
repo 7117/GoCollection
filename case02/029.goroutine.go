@@ -5,12 +5,16 @@ import (
 	"time"
 )
 
-func max() {
-	fmt.Println("info")
+func AddTo(x, y int) {
+	z := x + y
+	fmt.Println(z)
 }
 
 func main() {
 
-	go max();
-	time.Sleep(1)
+	for i := 1; i < 10; i++ {
+		go AddTo(i, i)
+	}
+
+	time.Sleep(2 * time.Second)
 }
