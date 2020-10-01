@@ -4,7 +4,7 @@ import "fmt"
 
 type Person struct {
 	name string
-	age int
+	age  int
 }
 
 type Human struct {
@@ -13,7 +13,7 @@ type Human struct {
 }
 
 func main() {
-	human := Human{Person{"zs",11},"qqq"}
+	human := Human{Person{"zs", 11}, "qqq"}
 
 	fmt.Println(human)
 	fmt.Println(human.Person)
