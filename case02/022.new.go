@@ -18,7 +18,7 @@ func (point *Point) getxy() (px, py float32) {
 
 func main() {
 	obj := new(Point)
-	obj.setxy(1.1,2.2);
-	a,b := obj.getxy();
-	fmt.Println(a,b)
+	obj.setxy(1.1, 2.2);
+	a, b := obj.getxy();
+	fmt.Println(a, b)
 }
