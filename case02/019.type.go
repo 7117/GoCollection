@@ -3,13 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	type sum func(x,y int)int
+	type sum func(x, y int) int
 
 	var f sum
 
 	f = func(x, y int) int {
-		return x+y;
+		return x + y;
 	}
 
-	fmt.Println(f(3,4))
+	fmt.Println(f(3, 4))
 }
