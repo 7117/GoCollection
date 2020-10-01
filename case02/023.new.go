@@ -13,13 +13,13 @@ type Stuone struct {
 }
 
 func (person Personone) getNameadnAge() (string, int) {
-	return person.name,person.age
+	return person.name, person.age
 }
 
 func main() {
 	studentone := new(Stuone)
 	studentone.name = "zs";
 	studentone.age = 12;
-	name,age := studentone.getNameadnAge()
-	fmt.Println(name,age)
+	name, age := studentone.getNameadnAge()
+	fmt.Println(name, age)
 }
