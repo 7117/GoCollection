@@ -15,7 +15,7 @@ func (bird Bird) Fly() bool {
 	return true;
 }
 
-func (Bird Bird) Run()bool{
+func (Bird Bird) Run() bool {
 	fmt.Println("bird is run")
 	return true;
 }
