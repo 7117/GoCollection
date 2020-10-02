@@ -1,14 +1,14 @@
 package main
 
 import (
-// 抽象包
-// 相当于php的扩展
-"database/sql"
-"fmt"
-// 实现层  有针对mysql的  sqlserver的
-// 类似于php的pdo  mysli
+	// 抽象包
+	// 相当于php的扩展
+	"database/sql"
+	"fmt"
+	// 实现层  有针对mysql的  sqlserver的
+	// 类似于php的pdo  mysli
 
-_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
