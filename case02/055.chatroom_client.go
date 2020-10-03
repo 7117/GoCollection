@@ -43,9 +43,8 @@ func main() {
 	//这里的话一直在等待读取信息
 	buf := make([]byte,1024)
 	for{
-		length,_ := conn.Read(buf)
-		fmt.Println(length)
-		fmt.Println("shoudao"+ string(buf))
+		conn.Read(buf)
+		fmt.Println("shoudao:"+ string(buf))
 	}
 
 	fmt.Println("client end")
