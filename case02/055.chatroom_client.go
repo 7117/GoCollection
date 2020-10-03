@@ -1,17 +1,52 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	_ "github.com/astaxie/beego"
 	"net"
+	"os"
+	"strings"
 )
 
+func MessageSend(conn net.Conn){
+
+	var input string
+
+	for{
+		reader := bufio.NewReader(os.Stdin)
+
+		data,_,_ :=reader.ReadLine()
+
+		input =  string(data)
+
+		if strings.ToUpper(input) == "EXIT"{
+			conn.Close()
+			break
+		}
+		conn.Write([]byte(input));
+		fmt.Println("input success")
+
+
+	}
+
+}
 
 func main() {
 
 	conn,_:= net.Dial("tcp","127.0.0.1:8081")
 	defer conn.Close()
 
-	conn.Write([]byte("hello"))
+	//一直在等待输入信息
+	go MessageSend(conn)
 
-	fmt.Println("had send")
+	//这里的话一直在等待读取信息
+	buf := make([]byte,1024)
+	for{
+		length,_ := conn.Read(buf)
+		fmt.Println(length)
+		fmt.Println("shoudao"+ string(buf))
+	}
+
+	fmt.Println("client end")
 }

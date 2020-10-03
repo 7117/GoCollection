@@ -19,7 +19,9 @@ func ProcessInfo(conn net.Conn){
 		numOfBytes,_ := conn.Read(buff)
 
 		if numOfBytes != 0 {
-			fmt.Println("process info" + string(numOfBytes))
+			addr := conn.RemoteAddr();
+			fmt.Println(addr)
+			fmt.Println(string(buff))
 		}
 	}
 
