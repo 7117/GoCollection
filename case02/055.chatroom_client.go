@@ -43,7 +43,11 @@ func main() {
 	//这里的话一直在等待读取信息
 	buf := make([]byte,1024)
 	for{
-		conn.Read(buf)
+		_,err := conn.Read(buf)
+		if err != nil{
+			fmt.Println("你已经退出")
+			os.Exit(0)
+		}
 		fmt.Println("shoudao:"+ string(buf))
 	}
 
