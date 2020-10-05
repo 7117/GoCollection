@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
+	"goPractice/beego02/models"
 )
 
 type ModelController struct {
@@ -42,11 +43,27 @@ func (c *ModelController) Test() {
 	//
 	//c.Ctx.WriteString(fmt.Sprintf("info:%v", user))
 
-	//原生读取
-	var users []Access
-	//o.Raw("select * from access").Values(&users)
-	o.Raw("select * from access").QueryRows(&users)
+	////原生读取
+	//var users []Access
+	////o.Raw("select * from access").Values(&users)
+	//o.Raw("select * from access").QueryRows(&users)
+	//
+	//c.Ctx.WriteString(fmt.Sprintf("info:%v", users))
 
-	c.Ctx.WriteString(fmt.Sprintf("info:%v", users))
+	//querybuilder
+	var users []Access
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+	qb.Select("password").From("access").Where("username=?").Limit(1)
+	sql := qb.String()
+
+	o.Raw(sql, "ss").QueryRows(&users)
+
+	c.Ctx.WriteString(fmt.Sprintf("info%v", users))
 }
 
+func (c *ModelController) Insert() {
+
+	user := models.Access{Username: "qq", Password: "1111"}
+	models.AddUser(&user)
+}
