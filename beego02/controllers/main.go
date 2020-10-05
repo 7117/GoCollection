@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 )
 
@@ -9,9 +10,12 @@ type MainController struct {
 }
 
 func (c *MainController) Test() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
-	c.TplName = "index.tpl"
+
+	c.SetSession("nasssme","aaaa");
+	aa := c.GetSession("nasssme")
+	fmt.Println(aa)
+
+
 }
 
 func (c *MainController) Other() {
