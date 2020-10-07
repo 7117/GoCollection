@@ -20,8 +20,15 @@ func (c *MainController) Test() {
 
 func (c *MainController) Other() {
 
+	s := make([]int,10)
+	s[0]=0;
+	s[1]=1;
+	s[2]=2;
+	s[3]=3;
+
 	c.Data["aa"]= "aa";
 	c.Data["bb"]= "bb";
+	c.Data["ss"] = s ;
 	c.TplName = "maincontroller/test.tpl"
 }
 
