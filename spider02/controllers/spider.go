@@ -20,7 +20,7 @@ func (c *SpiderController) CrawlMovie() {
 	models.PutinQueue(sUrl)
 
 	for {
-		//url数量
+		//url数量个数
 		length := models.GetQueueLength()
 		if length == 0 {
 			break
