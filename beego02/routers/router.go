@@ -20,4 +20,7 @@ func init() {
     beego.Router("/testmodel", &controllers.ModelController{},"*:Test")
 
     beego.Router("/insert", &controllers.ModelController{},"*:Insert")
+
+    beego.Router("/http", &controllers.HttpController{},"*:Http")
+    beego.Router("/context", &controllers.HttpController{},"*:Context")
 }
