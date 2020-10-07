@@ -13,35 +13,33 @@ type SpiderController struct {
 
 func (c *SpiderController) CrawlMovie() {
 
-	sUrl := "https://movie.douban.com/subject/25827935/"
-	sHtml := httplib.Get(sUrl)
-	sHtmls, _ := sHtml.String()
-
-	models.ConnectRedis("127.0.0.1:6379")
-	urls := models.GetMovieUrls(sHtmls)
-
-	for _, url := range urls {
-		models.PutinQueue(url)
-	}
-
-	c.Ctx.WriteString(fmt.Sprintf("%v", urls))
-
 	var movieInfo models.MovieInfo
+	models.ConnectRedis("127.0.0.1:6379")
 
-	movieInfo.Movie_name = models.GetMovieDirector(sHtmls)
-	movieInfo.Movie_director = models.GetMovieName(sHtmls)
-	movieInfo.Movie_main_character = models.GetMovieMainCharacters(sHtmls)
-	movieInfo.Movie_grade = models.GetMovieGrade(sHtmls)
-	movieInfo.Movie_type = models.GetMovieGenre(sHtmls)
-	movieInfo.Movie_on_time = models.GetMovieOnTime(sHtmls)
-	movieInfo.Movie_span = models.GetMovieRunningTime(sHtmls)
+	sUrl := "https://movie.douban.com/subject/25827935/"
+	models.PutinQueue(sUrl)
 
-	id, err := models.AddMovie(&movieInfo)
+	for {
+		//url数量
+		length := models.GetQueueLength()
+		if length == 0 {
+			break
+		}
 
-	if err != nil {
-		panic(err)
+		//进行获取url
+		sHtml := httplib.Get(sUrl)
+		sHtmls, _ := sHtml.String()
+		movieInfo.Movie_name = models.GetMovieDirector(sHtmls)
+		movieInfo.Movie_director = models.GetMovieName(sHtmls)
+		movieInfo.Movie_main_character = models.GetMovieMainCharacters(sHtmls)
+		movieInfo.Movie_grade = models.GetMovieGrade(sHtmls)
+		movieInfo.Movie_type = models.GetMovieGenre(sHtmls)
+		movieInfo.Movie_on_time = models.GetMovieOnTime(sHtmls)
+		movieInfo.Movie_span = models.GetMovieRunningTime(sHtmls)
+
+		id, _ := models.AddMovie(&movieInfo)
+
+		c.Ctx.WriteString(fmt.Sprintf("%v", id))
 	}
-
-	c.Ctx.WriteString(fmt.Sprintf("%v", id))
 
 }
