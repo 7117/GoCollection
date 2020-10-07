@@ -6,5 +6,6 @@ import (
 )
 
 func init() {
-    beego.Router("/", &controllers.MainController{})
+    beego.Router("/", &controllers.SpiderController{})
+    beego.Router("/crawl_movie", &controllers.SpiderController{},"*:CrawlMovie")
 }

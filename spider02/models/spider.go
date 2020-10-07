@@ -24,7 +24,7 @@ type MovieInfo struct {
 
 func init() {
 	orm.Debug = true
-	orm.RegisterModel(new(Access))
+	orm.RegisterModel(new(MovieInfo))
 	orm.RegisterDataBase("default", "mysql", "root:root@tcp(127.0.0.1:3306)/test1?charset=utf8", 30)
 	db = orm.NewOrm()
 }
@@ -32,5 +32,11 @@ func init() {
 func AddMovie(movie_info *MovieInfo)(int64,error)  {
 	id,err := db.Insert(movie_info)
 	return id,err
+}
+
+func getMovieDirector(movieHtml string)string{
+	if movieHtml == "" {
+		return " "
+	}
 }
 
