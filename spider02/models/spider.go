@@ -1,6 +1,11 @@
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"github.com/astaxie/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
+	"regexp"
+	"strings"
+)
 
 var (
 	db orm.Ormer
@@ -34,9 +39,54 @@ func AddMovie(movie_info *MovieInfo)(int64,error)  {
 	return id,err
 }
 
-func getMovieDirector(movieHtml string)string{
+func GetMovieDirector(movieHtml string)string{
 	if movieHtml == "" {
 		return " "
 	}
+
+	// <a href="/celebrity/1274534/" rel="v:directedBy">曾国祥</a>
+	// <a .*?rel="v:directedBy">(.*)</a>
+
+	reg := regexp.MustCompile(`<a .*?rel="v:directedBy">(.*)</a>`)
+
+	res := reg.FindAllStringSubmatch(movieHtml,-1)
+
+	return string(res[0][1]);
 }
+
+func GetMovieName(movieHtml string)string{
+	//<span property="v:itemreviewed">七月与安生</span>
+
+	if movieHtml == "" {
+		return " "
+	}
+
+	reg := regexp.MustCompile(`<span property="v:itemreviewed">(.*?)</span>`)
+	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
+	return string(result[0][1])
+}
+
+func GetMovieMainCharacters(movieHtml string) string {
+	//<a href="/celebrity/1274224/" rel="v:starring">周冬雨</a>
+
+	if movieHtml == "" {
+		return " "
+	}
+
+	reg := regexp.MustCompile(`<a.*?rel="v:starring">(.*?)</a>`)
+
+	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
+	mainCharacters := ""
+	for _, v := range result {
+		mainCharacters += v[1] + "/"
+	}
+
+	return strings.Trim(mainCharacters, "/")
+
+
+}
+
+
 

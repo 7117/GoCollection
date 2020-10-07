@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/httplib"
+	"goPractice/spider02/models"
 )
 
 type SpiderController struct {
@@ -15,6 +17,15 @@ func (c *SpiderController) CrawlMovie() {
 	sHtml := httplib.Get(sUrl)
 	sHtmls, _ := sHtml.String()
 
-	c.Ctx.WriteString(sHtmls)
+
+	c.Ctx.WriteString(models.GetMovieDirector(sHtmls))
+	c.Ctx.WriteString(models.GetMovieName(sHtmls)+ "|")
+	c.Ctx.WriteString(fmt.Sprintf("%v",models.GetMovieMainCharacters(sHtmls)))
 
 }
+
+
+
+
+
+
