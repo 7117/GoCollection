@@ -25,4 +25,11 @@ func (this *HttpController) Context() {
 	this.Ctx.WriteString(this.Ctx.Input.IP())
 	this.Ctx.WriteString("<br>")
 	this.Ctx.WriteString(strconv.Itoa(this.Ctx.Input.Port()))
+	this.Ctx.WriteString("<br>")
+
+
+	m := make(map[string]float64)
+	m["a"] = 1.1;
+	m["b"] = 2.2;
+	this.Ctx.Output.JSON(m,false,false)
 }
