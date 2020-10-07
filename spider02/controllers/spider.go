@@ -20,6 +20,10 @@ func (c *SpiderController) CrawlMovie() {
 	c.Ctx.WriteString(models.GetMovieDirector(sHtmls))
 	c.Ctx.WriteString(models.GetMovieName(sHtmls)+ "|")
 	c.Ctx.WriteString(models.GetMovieMainCharacters(sHtmls))
+	c.Ctx.WriteString(models.GetMovieGrade(sHtmls))
+	c.Ctx.WriteString(models.GetMovieGenre(sHtmls))
+	c.Ctx.WriteString(models.GetMovieOnTime(sHtmls))
+	c.Ctx.WriteString(models.GetMovieRunningTime(sHtmls))
 
 }
 

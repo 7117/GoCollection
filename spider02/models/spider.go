@@ -83,8 +83,38 @@ func GetMovieMainCharacters(movieHtml string) string {
 
 	return strings.Trim(mainCharacters, "/")
 
-
 }
 
+func GetMovieGrade(movieHtml string) string {
+	reg := regexp.MustCompile(`<strong.*?property="v:average">(.*?)</strong>`)
+	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
+	return string(result[0][1])
+}
+
+func GetMovieGenre(movieHtml string) string {
+	reg := regexp.MustCompile(`<span.*?property="v:genre">(.*?)</span>`)
+	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
+	movieGenre := ""
+	for _, v := range result {
+		movieGenre += v[1] + "/"
+	}
+	return strings.Trim(movieGenre, "/")
+}
+
+func GetMovieOnTime(movieHtml string) string {
+	reg := regexp.MustCompile(`<span.*?property="v:initialReleaseDate".*?>(.*?)</span>`)
+	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
+	return string(result[0][1])
+}
+
+func GetMovieRunningTime(movieHtml string) string {
+	reg := regexp.MustCompile(`<span.*?property="v:runtime".*?>(.*?)</span>`)
+	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
+	return string(result[0][1])
+}
 
 
