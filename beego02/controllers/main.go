@@ -19,6 +19,9 @@ func (c *MainController) Test() {
 }
 
 func (c *MainController) Other() {
-	c.Ctx.WriteString("hello beego")
+
+	c.Data["aa"]= "aa";
+	c.Data["bb"]= "bb";
+	c.TplName = "maincontroller/test.tpl"
 }
 
