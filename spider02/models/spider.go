@@ -7,10 +7,6 @@ import (
 	"strings"
 )
 
-var (
-	db orm.Ormer
-)
-
 type MovieInfo struct {
 	Id                   int64
 	Movie_id             int64
@@ -27,6 +23,10 @@ type MovieInfo struct {
 	Movie_grade          string
 }
 
+var (
+	db orm.Ormer
+)
+
 func init() {
 	orm.Debug = true
 	orm.RegisterModel(new(MovieInfo))
@@ -34,8 +34,9 @@ func init() {
 	db = orm.NewOrm()
 }
 
-func AddMovie(movie_info *MovieInfo) (int64, error) {
-	id, err := db.Insert(movie_info)
+func AddMovieInfo(movieInfo *MovieInfo) (id int64, err error) {
+	movieInfo.Id = ;
+	id, err = db.Insert(movieInfo)
 	return id, err
 }
 
@@ -64,7 +65,12 @@ func GetMovieName(movieHtml string) string {
 	reg := regexp.MustCompile(`<span property="v:itemreviewed">(.*?)</span>`)
 	result := reg.FindAllStringSubmatch(movieHtml, -1)
 
-	return string(result[0][1])
+	if result == nil {
+		return " "
+	} else {
+		return string(result[0][1])
+	}
+
 }
 
 func GetMovieMainCharacters(movieHtml string) string {
