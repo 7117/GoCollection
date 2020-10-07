@@ -34,12 +34,12 @@ func init() {
 	db = orm.NewOrm()
 }
 
-func AddMovie(movie_info *MovieInfo)(int64,error)  {
-	id,err := db.Insert(movie_info)
-	return id,err
+func AddMovie(movie_info *MovieInfo) (int64, error) {
+	id, err := db.Insert(movie_info)
+	return id, err
 }
 
-func GetMovieDirector(movieHtml string)string{
+func GetMovieDirector(movieHtml string) string {
 	if movieHtml == "" {
 		return " "
 	}
@@ -49,12 +49,12 @@ func GetMovieDirector(movieHtml string)string{
 
 	reg := regexp.MustCompile(`<a .*?rel="v:directedBy">(.*)</a>`)
 
-	res := reg.FindAllStringSubmatch(movieHtml,-1)
+	res := reg.FindAllStringSubmatch(movieHtml, -1)
 
 	return string(res[0][1]);
 }
 
-func GetMovieName(movieHtml string)string{
+func GetMovieName(movieHtml string) string {
 	//<span property="v:itemreviewed">七月与安生</span>
 
 	if movieHtml == "" {
@@ -74,10 +74,9 @@ func GetMovieMainCharacters(movieHtml string) string {
 	reg := regexp.MustCompile(`<a.*?rel="v:starring">(.*?)</a>`)
 	result := reg.FindAllStringSubmatch(movieHtml, -1)
 
-
 	mainCharacters := ""
 	for _, v := range result {
-	     //[<a href="/celebrity/1274224/" rel="v:starring">周冬雨</a> 周冬雨]
+		//[<a href="/celebrity/1274224/" rel="v:starring">周冬雨</a> 周冬雨]
 		mainCharacters += v[1] + "/"
 	}
 
@@ -117,4 +116,6 @@ func GetMovieRunningTime(movieHtml string) string {
 	return string(result[0][1])
 }
 
-
+func GetMovieUrls(movieHtml string) {
+	
+}
