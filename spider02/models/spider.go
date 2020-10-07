@@ -69,17 +69,15 @@ func GetMovieName(movieHtml string)string{
 
 func GetMovieMainCharacters(movieHtml string) string {
 	//<a href="/celebrity/1274224/" rel="v:starring">周冬雨</a>
-
-	if movieHtml == "" {
-		return " "
-	}
-
+	//MustCompile匹配规则
+	//FindAllStringSubmatch
 	reg := regexp.MustCompile(`<a.*?rel="v:starring">(.*?)</a>`)
-
 	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
 
 	mainCharacters := ""
 	for _, v := range result {
+	     //[<a href="/celebrity/1274224/" rel="v:starring">周冬雨</a> 周冬雨]
 		mainCharacters += v[1] + "/"
 	}
 
