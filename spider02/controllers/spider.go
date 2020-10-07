@@ -17,6 +17,15 @@ func (c *SpiderController) CrawlMovie() {
 	sHtml := httplib.Get(sUrl)
 	sHtmls, _ := sHtml.String()
 
+	models.ConnectRedis("127.0.0.1:6379")
+	urls := models.GetMovieUrls(sHtmls)
+
+	for _, url := range urls {
+		models.PutinQueue(url)
+	}
+
+	c.Ctx.WriteString(fmt.Sprintf("%v", urls))
+
 	var movieInfo models.MovieInfo
 
 	movieInfo.Movie_name = models.GetMovieDirector(sHtmls)

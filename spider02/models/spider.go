@@ -110,12 +110,24 @@ func GetMovieOnTime(movieHtml string) string {
 }
 
 func GetMovieRunningTime(movieHtml string) string {
+
 	reg := regexp.MustCompile(`<span.*?property="v:runtime".*?>(.*?)</span>`)
 	result := reg.FindAllStringSubmatch(movieHtml, -1)
 
 	return string(result[0][1])
 }
 
-func GetMovieUrls(movieHtml string) {
-	
+func GetMovieUrls(movieHtml string) []string {
+	//<a href="https://movie.douban.com/subject/3319755/">
+
+	reg := regexp.MustCompile(`<a.*?href="(https://movie.douban.com/subject/.*?)"`)
+	result := reg.FindAllStringSubmatch(movieHtml, -1)
+
+	var movieSets []string
+	for _, v := range result {
+		movieSets = append(movieSets, v[1])
+	}
+
+	return movieSets
+
 }
