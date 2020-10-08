@@ -48,7 +48,6 @@ func (c *SpiderController) CrawlMovie() {
 
 		if movieInfo.Movie_name != " " {
 
-			c.Ctx.WriteString(movieInfo.Movie_name)
 			movieInfo.Movie_director = models.GetMovieDirector(sHtmls)
 			movieInfo.Movie_main_character = models.GetMovieMainCharacters(sHtmls)
 			movieInfo.Movie_grade = models.GetMovieGrade(sHtmls)
