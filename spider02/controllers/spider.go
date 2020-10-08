@@ -20,7 +20,7 @@ func (c *SpiderController) CrawlMovie() {
 	models.PutinQueue(sUrl)
 
 	for {
-		//url数量个数
+		//判断队列中url数量
 		length := models.GetQueueLength()
 		if length == 0 {
 			break
@@ -30,7 +30,7 @@ func (c *SpiderController) CrawlMovie() {
 		只有没有访问过的才进行提取
 		*/
 		sUrl = models.PopfromQueue()
-		c.Ctx.WriteString(sUrl)
+		c.Ctx.WriteString("<br>" + sUrl + "<br>")
 		if models.IsVisit(sUrl) {
 			continue
 		}
@@ -47,7 +47,6 @@ func (c *SpiderController) CrawlMovie() {
 		movieInfo.Movie_name = models.GetMovieName(sHtmls)
 
 		if movieInfo.Movie_name != " " {
-
 			movieInfo.Movie_director = models.GetMovieDirector(sHtmls)
 			movieInfo.Movie_main_character = models.GetMovieMainCharacters(sHtmls)
 			movieInfo.Movie_grade = models.GetMovieGrade(sHtmls)
@@ -56,12 +55,14 @@ func (c *SpiderController) CrawlMovie() {
 			movieInfo.Movie_span = models.GetMovieRunningTime(sHtmls)
 
 			models.AddMovieInfo(&movieInfo)
+		} else {
+			continue
 		}
 
 		/**
 		进行添加至已经访问过的url
 		*/
-		models.AddToSet(sUrl)
+		go models.AddToSet(sUrl)
 
 		/**
 		添加保存url队列中
@@ -71,7 +72,7 @@ func (c *SpiderController) CrawlMovie() {
 			models.PutinQueue(url)
 		}
 
-		time.Sleep(2 * time.Second)
+		time.Sleep(500)
 
 	}
 
