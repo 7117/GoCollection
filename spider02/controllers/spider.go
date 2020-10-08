@@ -13,7 +13,7 @@ type SpiderController struct {
 
 func (c *SpiderController) CrawlMovie() {
 
-	var MovieInfo models.MovieInfo
+	var movieInfo models.MovieInfo
 	models.ConnectRedis("127.0.0.1:6379")
 
 	sUrl := "https://movie.douban.com/subject/25827935/"
@@ -30,7 +30,7 @@ func (c *SpiderController) CrawlMovie() {
 		只有没有访问过的才进行提取
 		*/
 		sUrl = models.PopfromQueue()
-		//c.Ctx.WriteString(sUrl)
+		c.Ctx.WriteString(sUrl)
 		if models.IsVisit(sUrl) {
 			continue
 		}
@@ -44,16 +44,19 @@ func (c *SpiderController) CrawlMovie() {
 			panic(err)
 		}
 
-		MovieInfo.Movie_name = models.GetMovieName(sHtmls)
-		if MovieInfo.Movie_name != " " {
+		movieInfo.Movie_name = models.GetMovieName(sHtmls)
 
-			MovieInfo.Movie_director = models.GetMovieDirector(sHtmls)
-			MovieInfo.Movie_main_character = models.GetMovieMainCharacters(sHtmls)
-			MovieInfo.Movie_grade = models.GetMovieGrade(sHtmls)
-			MovieInfo.Movie_type = models.GetMovieGenre(sHtmls)
-			MovieInfo.Movie_on_time = models.GetMovieOnTime(sHtmls)
+		if movieInfo.Movie_name != " " {
 
-			models.AddMovieInfo(&MovieInfo)
+			c.Ctx.WriteString(movieInfo.Movie_name)
+			movieInfo.Movie_director = models.GetMovieDirector(sHtmls)
+			movieInfo.Movie_main_character = models.GetMovieMainCharacters(sHtmls)
+			movieInfo.Movie_grade = models.GetMovieGrade(sHtmls)
+			movieInfo.Movie_type = models.GetMovieGenre(sHtmls)
+			movieInfo.Movie_on_time = models.GetMovieOnTime(sHtmls)
+			movieInfo.Movie_span = models.GetMovieRunningTime(sHtmls)
+
+			models.AddMovieInfo(&movieInfo)
 		}
 
 		/**

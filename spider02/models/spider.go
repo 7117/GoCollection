@@ -30,12 +30,12 @@ var (
 func init() {
 	orm.Debug = true
 	orm.RegisterModel(new(MovieInfo))
-	orm.RegisterDataBase("default", "mysql", "root:root@tcp(127.0.0.1:3306)/test1?charset=utf8", 30)
+	orm.RegisterDataBase("default", "mysql", "root:root@tcp(127.0.0.1:3306)/spider?charset=utf8", 30)
 	db = orm.NewOrm()
 }
 
 func AddMovieInfo(movieInfo *MovieInfo) (id int64, err error) {
-	movieInfo.Id = ;
+	movieInfo.Id = 0
 	id, err = db.Insert(movieInfo)
 	return id, err
 }
@@ -52,7 +52,11 @@ func GetMovieDirector(movieHtml string) string {
 
 	res := reg.FindAllStringSubmatch(movieHtml, -1)
 
-	return string(res[0][1]);
+	if res == nil {
+		return ""
+	} else {
+		return string(res[0][1])
+	}
 }
 
 func GetMovieName(movieHtml string) string {
@@ -94,7 +98,11 @@ func GetMovieGrade(movieHtml string) string {
 	reg := regexp.MustCompile(`<strong.*?property="v:average">(.*?)</strong>`)
 	result := reg.FindAllStringSubmatch(movieHtml, -1)
 
-	return string(result[0][1])
+	if result == nil {
+		return " "
+	} else {
+		return string(result[0][1])
+	}
 }
 
 func GetMovieGenre(movieHtml string) string {
@@ -112,7 +120,11 @@ func GetMovieOnTime(movieHtml string) string {
 	reg := regexp.MustCompile(`<span.*?property="v:initialReleaseDate".*?>(.*?)</span>`)
 	result := reg.FindAllStringSubmatch(movieHtml, -1)
 
-	return string(result[0][1])
+	if result == nil {
+		return " "
+	} else {
+		return string(result[0][1])
+	}
 }
 
 func GetMovieRunningTime(movieHtml string) string {
@@ -120,7 +132,12 @@ func GetMovieRunningTime(movieHtml string) string {
 	reg := regexp.MustCompile(`<span.*?property="v:runtime".*?>(.*?)</span>`)
 	result := reg.FindAllStringSubmatch(movieHtml, -1)
 
-	return string(result[0][1])
+	if result == nil {
+		return " "
+	} else {
+		return string(result[0][1])
+	}
+
 }
 
 func GetMovieUrls(movieHtml string) []string {
