@@ -14,7 +14,6 @@ func main() {
 	go read(ch)
 	go write(ch)
 
-
 	time.Sleep(2 * time.Second)
 }
 

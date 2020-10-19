@@ -29,7 +29,6 @@ func main() {
 	//bird.Fly();
 	//bird.Run();
 
-
 	var animal Animal
 	var animal2 Animale2
 	bird := new(Bird)
@@ -39,8 +38,5 @@ func main() {
 
 	animal.Fly();
 	animal.Run();
-
 	animal2.Fly();
-
-
 }
