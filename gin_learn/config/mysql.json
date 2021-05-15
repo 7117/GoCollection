@@ -1,0 +1,8 @@
+{
+  "host":"localhost",
+  "port":"3306",
+  "user_name":"root",
+  "password":"root",
+  "database":"test",
+  "logo_mode":true
+}
